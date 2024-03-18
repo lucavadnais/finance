@@ -1,0 +1,6 @@
+<div class="button-container">
+  <div [class]="'button ' + type + (text && icon ? ' gap' : '') + (disabled ? ' disabled' : '')">
+    <div class="text">{{text}}</div>
+    <div *ngIf="icon" class="icon"><i class="fa-solid {{icon}}"></i></div>
+  </div>
+</div>

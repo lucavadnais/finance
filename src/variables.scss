@@ -1,0 +1,29 @@
+:root {
+
+  font-family: Poppins , sans-serif;
+
+  .light-theme {
+    --primary: #FAFAFA;
+    --secondary: #EEEEEE;
+    --tertiary: #BEBEBE;
+    --fourth: #555664;
+    --fifth: #15064C;
+    --sixth: #010317;
+    --seventh: #000000;
+  }
+
+  .dark-theme {
+    --primary: #010317;
+    --secondary: #1B1D33;
+    --tertiary: #686A84;
+    --fourth: #B2B3BD;
+    --fifth: #EEEEEE;
+    --sixth: #EEEEEE;
+    --seventh: #FFFFFF;
+  }
+
+  --neutral: #636363;
+  --success: #42B154;
+  --warning: #FF9900;
+  --danger: #820000;
+}

@@ -1,0 +1,12 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2 class="title">VAD finance</h2>
+    <input class="input" [(ngModel)]="email" type="email" placeholder="Courriel">
+    <input class="input" [(ngModel)]="password" type="password" placeholder="Mot de passe">
+    <div *ngIf="errorMessage" class="error-message">{{errorMessage}}</div>
+    <div class="fgt-pwd"><div class="link">Mot de passe oublié?</div></div>
+    <div class="button">
+      <app-button [text]="'Connexion'" [type]="'primary'" (click)="login()"></app-button>
+    </div>
+  </div>
+</div>
