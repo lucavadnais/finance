@@ -1,4 +1,4 @@
-import {Inject, Injectable, OnInit, PLATFORM_ID} from "@angular/core";
+import {Inject, Injectable, PLATFORM_ID} from "@angular/core";
 import {HeaderProvider} from "../header/header.provider";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";

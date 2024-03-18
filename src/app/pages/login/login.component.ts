@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthProvider} from "../../providers/auth/auth.provider";
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import {ButtonComponent} from "../../components/button/button.component";
 import {NgIf} from "@angular/common";
