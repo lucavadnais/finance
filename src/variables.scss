@@ -10,6 +10,7 @@
     --fifth: #15064C;
     --sixth: #010317;
     --seventh: #000000;
+    background-color: var(--primary);
   }
 
   .dark-theme {
@@ -20,6 +21,7 @@
     --fifth: #EEEEEE;
     --sixth: #EEEEEE;
     --seventh: #FFFFFF;
+    background-color: var(--primary);
   }
 
   --neutral: #636363;

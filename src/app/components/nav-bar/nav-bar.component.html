@@ -1,0 +1,12 @@
+<div class="nav-bar-container">
+  <div class="nav-bar">
+    <i [routerLink]="'/home'" [class]="currentUrl === '/home' ? 'selected fa-solid fa-gauge-high' : 'fa-solid fa-gauge-high'"></i>
+    <i class="fa-solid fa-wallet"></i>
+    <i></i>
+    <div class="add-button">
+      <i class="plus-icon fa-solid fa-circle-plus"></i>
+    </div>
+    <i class="fa-solid fa-chart-simple"></i>
+    <i [routerLink]="'/settings'" [class]=" currentUrl === '/settings' ? 'selected fa-solid fa-gear' : 'fa-solid fa-gear'"></i>
+  </div>
+</div>

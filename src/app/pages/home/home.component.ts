@@ -103,9 +103,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor(
-    private router: Router,
-    private authProvider: AuthProvider) { }
+  constructor() { }
 
   ngOnInit() {
 
@@ -113,12 +111,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.getParentHeight();
-  }
-
-  logout() {
-    console.log("logout");
-    this.authProvider.logout();
-    this.router.navigateByUrl("/login");
   }
 
   updateCardClasses(action: 'add' | 'remove', classes: string[]) {

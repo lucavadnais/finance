@@ -31,14 +31,13 @@ export class LoginComponent {
 
   async createUser() {
     if (!this.email || !this.password) {
-      this.errorMessage = "Please fill in all fields."
+      this.errorMessage = "Veuillez remplir tous les champs."
       return;
     }
     try {
       await this.userProvider.createUser({email: this.email, password: this.password, language: 'en', first_name: 'John', last_name: 'Doe'})
     } catch (e: any) {
       console.log(e)
-      this.errorMessage = "Invalid credentials. Please try again."
       this.password = '';
       console.error(e);
     }
@@ -46,7 +45,7 @@ export class LoginComponent {
 
   async login() {
     if (!this.email || !this.password) {
-      this.errorMessage = "Please fill in all fields."
+      this.errorMessage = "Veuillez remplir tous les champs."
       return;
     }
     try {
@@ -54,7 +53,7 @@ export class LoginComponent {
       await this.router.navigate(['/home'])
     } catch (e: any) {
       console.log(e)
-      this.errorMessage = "Invalid credentials. Please try again."
+      this.errorMessage = "Courriel ou mot de passe invalide. Veuillez réessayer."
       this.password = '';
       console.error(e);
     }

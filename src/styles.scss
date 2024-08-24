@@ -11,7 +11,9 @@ html, body {
 }
 
 .container {
-  margin-top: 40px;
+  //margin-top: 40px;
+  padding-top: 40px !important;
+  min-height: calc(100vh - 110px);
 }
 
 .input {
