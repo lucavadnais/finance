@@ -1,3 +1,11 @@
-<div>
-  <app-button (click)="logout()" [text]="'Log Out'" [type]="'primary'"></app-button>
+<div class="container">
+<!--  <app-button (click)="logout()" [text]="'Log Out'" [type]="'primary'"></app-button>-->
+  <div class="content">
+    <div class="text-section">Argent total</div>
+    <div class="text-title">{{totalAmount}}$</div>
+    <div id="card-container" class="card-stack">
+      <app-card *ngFor="let card of cards; let i = index" id="{{i}}" (click)="selectCard(card, i)" class="card" [ngStyle]="{'top.px': i * offset, '--slide-down-target': slideDownTarget + 'px'}" [cardColor]="card.cardColor" [cardType]="card.cardType" [cardNumber]="card.cardNumber" [cardHolderName]="card.cardHolderName" [cardProvider]="card.cardProvider"></app-card>
+    </div>
+    <app-expense-list [expenses]="expenses"></app-expense-list>
+  </div>
 </div>

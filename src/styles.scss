@@ -1,11 +1,18 @@
 @import "variables.scss";
 
+/* Font Awesome */
+@import '@fortawesome/fontawesome-free/css/all.css';
 
-body {
+html, body {
+  width: 100%;
+  height: auto;
   margin: 0;
   box-sizing: border-box;
 }
 
+.container {
+  margin-top: 40px;
+}
 
 .input {
   padding: 1rem;
@@ -43,4 +50,13 @@ body {
 .error-message {
   color: var(--danger);
   font-size: 0.8rem;
+}
+
+// Text
+.text-title {
+  font-size: 32px;
+  font-weight: 600;
+}
+.text-section {
+  font-size: 22px;
 }

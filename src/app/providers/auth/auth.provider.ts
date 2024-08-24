@@ -1,50 +1,41 @@
-import {Inject, Injectable, PLATFORM_ID} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {HeaderProvider} from "../header/header.provider";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {BehaviorSubject} from "rxjs";
-import {isPlatformBrowser} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthProvider {
-  private isLoggedIn = new BehaviorSubject<boolean>(false);
+  private readonly TOKEN_KEY = 'auth_token';
   server = environment.apiUrl;
-  isBrowser: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
     private httpClient: HttpClient,
     private headerProvider: HeaderProvider) {
-    this.isBrowser = isPlatformBrowser(platformId)
-    this.checkToken();
   }
 
-  validateCreds(): void {
-    localStorage.setItem('access_token', 'access_token');
-    this.isLoggedIn.next(true);
+  // Save the token to local storage
+  saveToken(token: string): void {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
 
-  isAuthenticated() {
-    return this.isLoggedIn.asObservable();
+  // Retrieve the token from local storage
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  checkToken() {
-    if (this.isBrowser) {
-      const token = localStorage.getItem('access_token');
-      this.isLoggedIn.next(!!token);
-      return !!token;
-    } else {
-      return false;
-    }
+  // Check if the user is authenticated
+  authenticated(): boolean {
+    const token = this.getToken();
+    return !!token;
   }
 
   login(credentials: {email: string, password: string}) {
     return new Promise((resolve, reject) => {
       const headers = this.headerProvider.getCommonHeaders();
       this.httpClient.post(this.server + `/login`, credentials, {"headers":headers}).subscribe((res: any) => {
-        this.validateCreds();
+        this.saveToken(res);
         resolve(res);
       }, err=>{
         reject(err);
@@ -53,7 +44,6 @@ export class AuthProvider {
   }
 
   logout(){
-    localStorage.removeItem('access_token');
-    this.isLoggedIn.next(false);
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 }
