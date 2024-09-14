@@ -30,3 +30,14 @@ export interface Account {
   lastDigits: number;
   color: string;
 }
+
+export interface AccountToApi {
+  user_id: string;
+  type: string;
+  currency: string;
+  provider: string;
+  name: string;
+  lastDigits: number | undefined;
+  color: string;
+  createdAt: Date;
+}

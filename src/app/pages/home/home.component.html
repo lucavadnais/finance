@@ -1,10 +1,19 @@
-<div class="container">
-  <div class="content">
-    <div class="text-section">Argent total</div>
-    <div class="text-title">{{totalAmount}}$</div>
-    <div id="card-container" class="card-stack">
-      <app-card *ngFor="let card of cards; let i = index" id="{{i}}" (click)="selectCard(card, i)" class="card" [ngStyle]="{'top.px': i * offset, '--slide-down-target': slideDownTarget + 'px'}" [cardColor]="card.cardColor" [cardType]="card.cardType" [cardNumber]="card.cardNumber" [cardHolderName]="card.cardHolderName" [cardProvider]="card.cardProvider"></app-card>
+<div *ngIf="!loading" class="container">
+  <div class="text-section">Argent total</div>
+  <div class="text-title">{{totalAmount}}$</div>
+  <div id="card-container" class="card-stack">
+    <app-card *ngFor="let account of accounts; let i = index" id="{{i}}" (click)="selectCard(account, i)" class="card" [ngStyle]="{'top.px': i * offset, '--slide-down-target': slideDownTarget + 'px'}" [cardColor]="account.color" [cardType]="account.type" [cardNumber]="account.lastDigits" [cardHolderName]="account.name" [cardProvider]="account.provider"></app-card>
+    <div id="{{accounts.length}}" (click)="createNewCard()" class="card add add-card" [ngStyle]="{'top.px': accounts.length * 75, '--slide-down-target': slideDownTarget + 'px'}">
+      <div class="new-card-text">
+        Ajouter une nouvelle carte <i class="fa-solid fa-circle-plus"></i>
+      </div>
     </div>
-    <app-expense-list [expenses]="expenses"></app-expense-list>
+    <app-card *ngIf="!accounts.length" (click)="createNewCard()" class="card" [ngStyle]="{'top.px': offset, '--slide-down-target': slideDownTarget + 'px'}" [newCard]="newAccountCard.newCard" [cardColor]="newAccountCard.color" [cardType]="newAccountCard.type" [cardNumber]="newAccountCard.lastDigits" [cardHolderName]="newAccountCard.name" [cardProvider]="newAccountCard.provider"></app-card>
   </div>
+  <app-expense-list *ngIf="accounts.length" [expenses]="expenses"></app-expense-list>
+  <app-bottom-sheet *ngIf="isBottomSheetOpen" (isOpen)="createNewCard()">
+    <div content>
+      <app-new-account></app-new-account>
+    </div>
+  </app-bottom-sheet>
 </div>

@@ -1,11 +1,15 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ButtonComponent} from "../../components/button/button.component";
 import {AuthProvider} from "../../providers/auth/auth.provider";
-import {Router} from "@angular/router";
 import {CardComponent} from "../../components/card/card.component";
-import {NgForOf, NgStyle} from "@angular/common";
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {ExpenseListComponent} from "../../components/expense-list/expense-list.component";
 import {Account, Transaction} from "../../models/transaction.model";
+import {AccountProvider} from "../../providers/account.provider";
+import {User} from "../../models/user.model";
+import {BottomSheetComponent} from "../../components/bottom-sheet/bottom-sheet.component";
+import {NewAccountComponent} from "../../components/new-account/new-account.component";
+import {RefreshService} from "../../services/refresh.service";
 
 @Component({
   selector: 'app-home',
@@ -15,117 +19,129 @@ import {Account, Transaction} from "../../models/transaction.model";
     CardComponent,
     NgStyle,
     NgForOf,
-    ExpenseListComponent
+    ExpenseListComponent,
+    NgIf,
+    BottomSheetComponent,
+    NewAccountComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
+  user: User | null = null;
   offset = 75;
   slideDownTarget = '';
   isStack = false;
+  loading = false;
+  isBottomSheetOpen = false;
 
   totalAmount = '1000.00';
+  accounts: Account[] = [];
 
-  // TMP
-  cards = [
-    {
-      cardType: 'credit',
-      cardNumber: '3456',
-      cardHolderName: 'John Doe',
-      cardProvider: 'masterCard',
-      cardColor: 'linear-gradient(#585858, rgba(13, 13, 13, 0.8))'
-    },
-    {
-      cardType: 'debit',
-      cardNumber: '3456',
-      cardHolderName: 'John Doe',
-      cardProvider: 'visa',
-      cardColor: 'linear-gradient(#0072F7, rgba(0, 22, 55, 0.8))'
-    },
-    {
-      cardType: 'credit',
-      cardNumber: '3456',
-      cardHolderName: 'John Doe',
-      cardProvider: 'masterCard',
-      cardColor: 'linear-gradient(#00D971, rgba(0, 55, 29, 0.8))'
-    },
-  ];
+  expenses: Transaction[] = [];
 
-  account: Account[] = [
-    {
-      _id: '1',
-      userId: '1',
-      createdAt: '2021-07-01',
-      type: 'checking',
-      currency: 'USD',
-      provider: 'Chase',
-      name: 'Chase Checking',
-      lastDigits: 1234,
-      color: 'linear-gradient(#0072F7, rgba(0, 22, 55, 0.8))'
-    },
-    {
-      _id: '2',
-      userId: '1',
-      createdAt: '2021-07-01',
-      type: 'savings',
-      currency: 'USD',
-      provider: 'Chase',
-      name: 'Chase Savings',
-      lastDigits: 5678,
-      color: 'linear-gradient(#00D971, rgba(0, 55, 29, 0.8))'
-    }
-  ];
 
-  expenses: Transaction[] = [
-    {
-      _id: '1',
-      accountId: '1',
-      account: this.account[0],
-      type: 'debit',
-      date: '2021-07-01',
-      amount: 100.00,
-      categoryId: '1',
-      category: { _id: '1', userId: '1', name: 'Groceries', icon: 'shopping-cart', parentId: 0, parent: null },
-      comment: 'Groceries at Walmart'
-    },
-    {
-      _id: '2',
-      accountId: '1',
-      account: this.account[1],
-      type: 'debit',
-      date: '2021-07-01',
-      amount: 100.00,
-      categoryId: '2',
-      category: {_id: '2', userId: '1', name: 'Gas', icon: 'gas-pump', parentId: 0, parent: {_id: '2', userId: '1', name: 'Shell', icon: 'gas-pump', parentId: 0, parent: null}},
-      comment: 'Gas at Shell'
-    }
-  ];
+  newAccountCard = {
+    newCard: true,
+    type: 'debit',
+    provider: 'visa',
+    name: '',
+    lastDigits: 1234,
+    color: 'linear-gradient(#ffffff, rgba(214, 214, 214, 0.8))'
+  }
 
-  constructor() { }
+  constructor(
+    private refreshService: RefreshService,
+    private authProvider: AuthProvider,
+    private accountProvider: AccountProvider,
+  ) {
+
+  }
 
   ngOnInit() {
+    this.refreshService.refreshAccount.subscribe(() => {
+      console.log('refreshing accounts');
+      this.fetchPageContent();
+    });
 
+    this.user = JSON.parse(this.authProvider.getToken());
+    this.newAccountCard.name = `${this.user?.first_name} ${this.user?.last_name}`;
+    this.fetchPageContent();
+  }
+
+  fetchPageContent() {
+    Promise.all([this.getUserAccounts()]).then((res:any) => {
+      this.accounts = res[0];
+      this.expenses = [
+        {
+          _id: '1',
+          accountId: '1',
+          account: this.accounts[0],
+          type: 'debit',
+          date: '2021-07-01',
+          amount: 100.00,
+          categoryId: '1',
+          category: { _id: '1', userId: '1', name: 'Groceries', icon: 'shopping-cart', parentId: 0, parent: null },
+          comment: 'Groceries at Walmart'
+        },
+        {
+          _id: '2',
+          accountId: '1',
+          account: this.accounts[1],
+          type: 'debit',
+          date: '2021-07-01',
+          amount: 100.00,
+          categoryId: '2',
+          category: {_id: '2', userId: '1', name: 'Gas', icon: 'gas-pump', parentId: 0, parent: {_id: '2', userId: '1', name: 'Shell', icon: 'gas-pump', parentId: 0, parent: null}},
+          comment: 'Gas at Shell'
+        }
+      ];
+    }).catch(err => {
+      console.error(err);
+    }).finally(() => {
+      this.loading = false;
+    });
   }
 
   ngAfterViewInit() {
-    this.getParentHeight();
+    setTimeout(() => {
+      this.getParentHeight();
+    }, 500);
   }
 
-  updateCardClasses(action: 'add' | 'remove', classes: string[]) {
-    this.cards.forEach((_, index) => {
-      const element = document.getElementById(index.toString());
-      if (element) {
-        classes.forEach(className => element.classList[action](className));
+  getUserAccounts() {
+    return new Promise((resolve, reject) => {
+      if (this.user) {
+        this.accountProvider.getAllUserAccounts(this.user._id).then((res: any) => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        });
       }
     });
   }
 
-  selectCard(card: any, index: number) {
-    this.slideDownTarget = (((this.cards.length - 1) - index) * this.offset).toString()
+  createNewCard() {
+    this.isBottomSheetOpen = !this.isBottomSheetOpen;
+  }
 
-    if (this.cards[this.cards.length - 1] === card) {
+  updateCardClasses(action: 'add' | 'remove', classes: string[]) {
+    this.accounts.forEach((_, index) => {
+      const element = document.getElementById(index.toString());
+      if (element) {
+        classes.forEach(className => element.classList[action](className));
+      }
+
+      document.getElementById(this.accounts.length.toString())!.classList[action](classes[0]);
+
+    });
+  }
+
+  selectCard(card: any, index: number) {
+    this.slideDownTarget = (((this.accounts.length - 1) - index) * this.offset).toString()
+
+    if (this.accounts[this.accounts.length - 1] === card) {
       if (!this.isStack) {
         this.updateCardClasses.call(this, 'add', ['stack']);
       } else {
@@ -143,8 +159,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     let i = 0;
-    for (let unselectedCard of this.cards) {
-      if (unselectedCard !== card && unselectedCard !== this.cards[0]) {
+    for (let unselectedCard of this.accounts) {
+      if (index < i  && unselectedCard !== this.accounts[0]) {
         document.getElementById(i.toString())?.classList.add('unselected');
       }
       i++;
@@ -157,14 +173,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       document.getElementById(index.toString())?.classList.remove('selected');
       let i = 0;
-      for (let unselectedCard of this.cards) {
-        if (unselectedCard !== card && unselectedCard !== this.cards[0]) {
+      for (let unselectedCard of this.accounts) {
+        if (unselectedCard !== card && unselectedCard !== this.accounts[0]) {
           document.getElementById(i.toString())?.classList.remove('unselected');
         }
         i++;
       }
-      this.cards = this.cards.filter(c => c !== card);
-      this.cards.push(card);
+      this.accounts = this.accounts.filter(c => c !== card);
+      this.accounts.push(card);
     }, 500);
   }
 

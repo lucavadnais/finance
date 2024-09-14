@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgIf} from "@angular/common";
 
 @Component({
@@ -10,12 +10,18 @@ import {NgIf} from "@angular/common";
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class CardComponent {
+export class CardComponent implements OnInit {
 
   @Input() cardType: string = '';
-  @Input() cardNumber: string = '';
+  @Input() cardNumber?: number;
   @Input() cardHolderName: string = '';
-  @Input() cardProvider: string = 'masterCard' || 'visa';
+  @Input() cardProvider: string = 'mastercard' || 'visa';
   @Input() cardColor: string = '';
+  @Input() newCard: boolean = false;
+
+
+
+  ngOnInit() {
+  }
 
 }

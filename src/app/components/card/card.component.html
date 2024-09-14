@@ -7,9 +7,12 @@
           <div class="card-number">**** {{cardNumber}}</div>
           <div class="card-holder-name">{{cardHolderName}}</div>
         </div>
-        <div class="card-provider-logo">
-          <img *ngIf="cardProvider === 'masterCard'" src="assets/logo/mastercard_logo.png" alt="MasterCard" />
+        <div *ngIf="!newCard" class="card-provider-logo">
+          <img *ngIf="cardProvider === 'mastercard'" src="assets/logo/mastercard_logo.png" alt="MasterCard" />
           <img *ngIf="cardProvider === 'visa'" src="assets/logo/visa_logo.png" alt="Visa" />
+        </div>
+        <div *ngIf="newCard" class="new-card-text">
+          Nouvelle carte <i class="fa-solid fa-circle-plus"></i>
         </div>
       </div>
     </div>

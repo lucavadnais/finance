@@ -1,10 +1,15 @@
 .card-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
   .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 350px;
-    height: 200px;
+    height: 210px;
+    width: 100%;
+    max-width: 360px;
     color: var(--primary);
     border-radius: 15px;
     padding: 15px;
@@ -41,6 +46,17 @@
       img {
         width: 80px;
       }
+    }
+
+    .new-card-text {
+      display: flex;
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      padding: 10px;
+      color: var(--primary);
+      background: var(--sixth)
     }
   }
 }

@@ -1,12 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 10px;
-
-  .content {
-    width: 380px;
-  }
 }
 
 .card-stack {
@@ -21,8 +16,17 @@
   transition: all 0.5s ease-in-out;
 
  .card {
+   width: 100%;
    position: absolute;
    top: 0;
+   z-index: 1;
+
+   &.add {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 0;
+   }
  }
 
  .selected {
@@ -31,7 +35,7 @@
 
  .unselected {
    animation: slide-up 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
-   z-index: 0;
+   z-index: 1;
  }
 
  .stack {
@@ -40,6 +44,25 @@
 
   .unstack {
     animation: unstack 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  }
+}
+
+.add-card {
+  height: 175px;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 15px;
+  padding: 8px;
+  background: linear-gradient(#ffffff, rgba(214, 214, 214, 0.8));
+  cursor: pointer;
+
+  .new-card-text {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    color: black;
   }
 }
 
@@ -67,11 +90,11 @@
   }
   50% {
     transform: translateY(-100%);
-    z-index: 1;
+    z-index: 2;
   }
   100% {
     transform: translateY(var(--slide-down-target));
-    z-index: 1;
+    z-index: 2;
   }
 }
 
