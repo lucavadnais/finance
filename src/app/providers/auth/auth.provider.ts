@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HeaderProvider} from "../header/header.provider";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {BrowserStorageService} from "../browser-storage.provider";
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +12,19 @@ export class AuthProvider {
   server = environment.apiUrl;
 
   constructor(
+    private storage: BrowserStorageService,
     private httpClient: HttpClient,
     private headerProvider: HeaderProvider) {
   }
 
   // Save the token to local storage
   saveToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    this.storage.setItem(this.TOKEN_KEY, token);
   }
 
   // Retrieve the token from local storage
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+  getToken(): any | null {
+    return this.storage.getItem(this.TOKEN_KEY);
   }
 
   // Check if the user is authenticated
@@ -44,6 +46,6 @@ export class AuthProvider {
   }
 
   logout(){
-    localStorage.removeItem(this.TOKEN_KEY);
+    this.storage.removeItem(this.TOKEN_KEY);
   }
 }
