@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   gap: 10px;
+  padding: 10px;
 
   .item {
     display: flex;
@@ -17,6 +18,7 @@
     box-shadow: rgb(210 210 210 / 15%) 0px 1px 100px 0px;
     border-radius: 8px;
     cursor: pointer;
+    animation: fadeIn 0.5s ease-in-out;
 
     & span {
       height: 100%;
@@ -47,6 +49,17 @@
         margin-right: 10px;
       }
 
+      .category {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        i {
+          font-size: 20px;
+          //color: #004d00;
+        }
+      }
+
       .category, .amount {
         color: var(--seventh);
         font-size: 17px;
@@ -54,7 +67,7 @@
 
       .subcategory {
         color: var(--fourth);
-        font-size: 15px;
+        font-size: 12px;
       }
 
       .date {
@@ -62,5 +75,14 @@
         font-size: 10px;
       }
     }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

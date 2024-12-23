@@ -1,12 +1,23 @@
 export interface Transaction {
   _id: string;
+  userId: string;
   accountId: string;
-  account: Account;
-  type: string;
+  type: number;
   date: string;
   amount: number;
   categoryId: any;
-  category: Category;
+  comment: string;
+  account?: Account;
+  category?: Category;
+}
+
+export interface TransactionToApi {
+  userId: string;
+  accountId: string;
+  type: number;
+  date: Date;
+  amount: number;
+  categoryId: string;
   comment: string;
 }
 
@@ -15,8 +26,9 @@ export interface Category {
   userId: string;
   name: string;
   icon: string;
-  parentId: number;
+  parentId?: string;
   parent: Category | null;
+  children?: Category[] | null;
 }
 
 export interface Account {
@@ -32,7 +44,7 @@ export interface Account {
 }
 
 export interface AccountToApi {
-  user_id: string;
+  userId: string;
   type: string;
   currency: string;
   provider: string;

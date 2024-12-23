@@ -1,4 +1,4 @@
-<div class="light-theme">
+<div id="root" class="light-theme">
   <router-outlet></router-outlet>
-  <app-nav-bar *ngIf="showNavBar" [currentUrl]="currentUrl" class="nav-bar"></app-nav-bar>
+  <app-nav-bar id="navbar" *ngIf="showNavBar" [currentUrl]="currentUrl" class="nav-bar" [ngClass]="{'hide': isHidden}"></app-nav-bar>
 </div>

@@ -12,6 +12,7 @@ import {NgIf} from "@angular/common";
 })
 export class CardComponent implements OnInit {
 
+  @Input() small: boolean = false;
   @Input() cardType: string = '';
   @Input() cardNumber?: number;
   @Input() cardHolderName: string = '';

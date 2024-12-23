@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CardComponent} from "../card/card.component";
 import {FormsModule} from "@angular/forms";
 import {FloatLabelModule} from "primeng/floatlabel";
@@ -9,7 +9,7 @@ import {ButtonComponent} from "../button/button.component";
 import {AccountProvider} from "../../providers/account.provider";
 import {User} from "../../models/user.model";
 import {AuthProvider} from "../../providers/auth/auth.provider";
-import {Account, AccountToApi} from "../../models/transaction.model";
+import {AccountToApi} from "../../models/transaction.model";
 import {RefreshService} from "../../services/refresh.service";
 import {BottomSheetService} from "../../services/bottom-sheet.service";
 
@@ -39,7 +39,7 @@ export class NewAccountComponent {
   initialAmount= 0;
 
   newAccountCard: AccountToApi = {
-    user_id: '',
+    userId: '',
     type: 'debit',
     currency: "cad",
     provider: 'visa',
@@ -57,7 +57,7 @@ export class NewAccountComponent {
     private authProvider: AuthProvider
   ) {
     this.user = JSON.parse(this.authProvider.getToken());
-    this.newAccountCard.user_id = this.user._id;
+    this.newAccountCard.userId = this.user._id;
     this.newAccountCard.name = this.user.first_name + ' ' + this.user.last_name;
   }
 
@@ -83,9 +83,10 @@ export class NewAccountComponent {
   }
 
   addNewAccount() {
+    console.log(this.newAccountCard);
     this.accountProvider.createNewAccount(this.newAccountCard).then(() => {
       this.refreshService.emitRefreshNewAccountEvent();
-      this.bottomSheetService.emitOpenBottomSheetEvent();
+      this.bottomSheetService.emitOpenBottomSheetEvent('new-card');
     }).catch(err => {
       console.error(err);
     });

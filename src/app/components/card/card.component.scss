@@ -10,7 +10,7 @@
     height: 210px;
     width: 100%;
     max-width: 360px;
-    color: var(--primary);
+    color: #FAFAFAFF;
     border-radius: 15px;
     padding: 15px;
     user-select: none;
@@ -18,6 +18,25 @@
     backdrop-filter: blur(8px);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+
+    &.small {
+      height: auto;
+      box-shadow: none;
+
+      .duo {
+        align-items: center;
+
+        .card-number {
+          font-size: 18px;
+          font-weight: normal;
+        }
+
+        .card-holder-name {
+          font-size: 12px;
+        }
+      }
+
+    }
 
     &:hover {
       backdrop-filter: blur(100px);
@@ -55,7 +74,7 @@
       align-items: center;
       border-radius: 15px;
       padding: 10px;
-      color: var(--primary);
+      color: #FAFAFAFF;
       background: var(--sixth)
     }
   }

@@ -1,5 +1,12 @@
 .nav-bar {
-  position: sticky;
+  position: fixed;
   bottom: 10px;
   width: 100%;;
+  z-index: 10;
+  transition: all 0.3s ease-in-out;
+}
+
+.hide {
+  bottom: -20px;
+  transform: translateY(100%);
 }

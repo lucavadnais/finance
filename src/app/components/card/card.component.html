@@ -1,11 +1,11 @@
 <div class="card-container">
-  <div class="card" [style.background]="cardColor">
-    <div class="card-type">{{cardType.charAt(0).toUpperCase() + cardType.slice(1).toLowerCase()}}</div>
-    <div>
+  <div [class]="small ? 'card small' : 'card'" [style.background]="cardColor">
+    <div *ngIf="!small" class="card-type">{{cardType.charAt(0).toUpperCase() + cardType.slice(1).toLowerCase()}}</div>
+    <div *ngIf="!small">
       <div class="duo">
         <div>
           <div class="card-number">**** {{cardNumber}}</div>
-          <div class="card-holder-name">{{cardHolderName}}</div>
+          <div *ngIf="!small" class="card-holder-name">{{cardHolderName}}</div>
         </div>
         <div *ngIf="!newCard" class="card-provider-logo">
           <img *ngIf="cardProvider === 'mastercard'" src="assets/logo/mastercard_logo.png" alt="MasterCard" />
@@ -14,6 +14,15 @@
         <div *ngIf="newCard" class="new-card-text">
           Nouvelle carte <i class="fa-solid fa-circle-plus"></i>
         </div>
+      </div>
+    </div>
+    <div *ngIf="small">
+      <div class="duo">
+        <div>
+          <div class="card-type">{{cardType.charAt(0).toUpperCase() + cardType.slice(1).toLowerCase()}}</div>
+          <div class="card-holder-name">{{cardHolderName}}</div>
+        </div>
+        <div class="card-number">**** {{cardNumber}}</div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {NavBarComponent} from "./components/nav-bar/nav-bar.component";
@@ -19,13 +19,34 @@ export class AppComponent implements OnInit {
   isLoggedIn = true;
   currentUrl = ''
 
+  isHidden = false;
+  lastScrollY = 0;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authProvider: AuthProvider
   ) {}
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScrollY = window.scrollY;
+
+    // Determine scroll direction
+    if (currentScrollY > this.lastScrollY) {
+      // Scrolling down, hide navbar
+      this.isHidden = true;
+    } else {
+      // Scrolling up, show navbar
+      this.isHidden = false;
+    }
+
+    // Update the last scroll position
+    this.lastScrollY = currentScrollY;
+  }
+
   ngOnInit(): void {
+    this.lastScrollY = window.scrollY;
     this.routeSub = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {

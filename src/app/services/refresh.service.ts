@@ -11,4 +11,8 @@ export class RefreshService {
   emitRefreshNewAccountEvent() {
     this.refreshAccount.emit();
   }
+
+  emitRefreshNewTransactionEvent() {
+    this.refreshAccount.emit();
+  }
 }

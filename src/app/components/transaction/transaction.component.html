@@ -1,0 +1,32 @@
+<div class="square">
+  <div id="card-container" class="card-stack">
+    <app-card (click)="selectCard(account, i)" *ngFor="let account of accounts; let i = index" id="{{i + 'trx'}}" class="card stack" [small]="true" [ngStyle]="{'top.px': i * offset,  '--slide-down-target': slideDownTarget + 'px'}" [cardColor]="account.color" [cardType]="account.type" [cardNumber]="account.lastDigits" [cardHolderName]="account.name" [cardProvider]="account.provider"></app-card>
+  </div>
+  <div class="main-content transaction-component">
+    <p-inputNumber
+      [(ngModel)]="amount"
+      mode="currency"
+      inputId="currency"
+      currency="USD"
+      [min]="0"
+      locale="de-DE"/>
+    <span (click)="openCalendar()">
+      <input class="calendar" id="dateInput" [value]="date" type="date">
+      <i class="calendar-icon fa-regular fa-calendar"></i>
+    </span>
+    <app-button (click)="openAddTransactionMenu()" class="button" [text]="category?.name || 'Catégories'" [type]="'primary'" ></app-button>
+    <textarea
+      rows="1"
+      cols="30"
+      pInputTextarea
+      [autoResize]="true"
+      placeholder="Ajouter une note"
+      [(ngModel)]="comment">
+    </textarea>
+  </div>
+</div>
+<app-bottom-sheet *ngIf="isBottomSheetOpen" [title]="parentName ? parentName : 'Catégories'" [actionButtons]="true" [id]="'categories'" (isOpen)="openAddTransactionMenu()">
+  <div content>
+    <app-categories [selectedCategory]="category" (parentCategory)="selectedParentNameCategory($event)" (categorySelected)="selectedCategory($event)"></app-categories>
+  </div>
+</app-bottom-sheet>

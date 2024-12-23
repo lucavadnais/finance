@@ -4,11 +4,16 @@ import { EventEmitter, Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class BottomSheetService {
-  closeBottomSheet: EventEmitter<boolean> = new EventEmitter();
+  closeBottomSheet: EventEmitter<string> = new EventEmitter();
+  concludeBottomSheet: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
-  emitOpenBottomSheetEvent() {
-    this.closeBottomSheet.emit();
+  emitOpenBottomSheetEvent(id: string) {
+    this.closeBottomSheet.emit(id);
+  }
+
+  emitConcludeBottomSheetEvent(id: string) {
+    this.concludeBottomSheet.emit(id);
   }
 }

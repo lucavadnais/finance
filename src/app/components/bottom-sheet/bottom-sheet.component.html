@@ -1,11 +1,12 @@
-<div id="bottom-sheet" class="bottom-sheet open">
+<div [id]="'bottom-sheet' + id" class="bottom-sheet open">
   <div *ngIf="actionButtons" class="action-buttons">
     <div class="left" (click)="close()">Annuler</div>
-    <div class="title">Nouvelle carte</div>
-    <div class="right" (click)="close()">Terminer</div>
+    <div *ngIf="title" class="title">{{title}}</div>
+    <ng-content select="[title]"></ng-content>
+    <div class="right" (click)="conclude()">Terminer</div>
   </div>
   <div class="content">
     <ng-content select="[content]"></ng-content>
   </div>
 </div>
-<div id="bottom-sheet-background" class="bottom-sheet-background open" (click)="close()"></div>
+<div [id]="'bottom-sheet-background' + id" class="bottom-sheet-background open" (click)="close()"></div>
