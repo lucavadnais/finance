@@ -1,29 +1,24 @@
-import {Injectable} from "@angular/core";
+import {inject} from "@angular/core";
 import {AuthProvider} from "./auth.provider";
-import {CanActivate, Router} from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+  UrlTree
+} from "@angular/router";
+import {Observable} from "rxjs";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthGuard implements CanActivate{
+export const AuthGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+):
+  Observable<boolean | UrlTree>
+  | Promise<boolean | UrlTree>
+  | boolean
+  | UrlTree=> {
 
-    constructor(
-      private router: Router,
-      private authProvider: AuthProvider
-    ) { }
-
-  canActivate(): boolean {
-    let isAuth: boolean | null = null;
-    this.authProvider.isAuthenticated().subscribe((response) => {
-      isAuth = response;
-    });
-
-    /*TODO: fix nav glitch */
-    if (!isAuth) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-
-    return true;
-  }
-}
+  return inject(AuthProvider).authenticated()
+    ? true
+    : inject(Router).createUrlTree(['/login']);
+};

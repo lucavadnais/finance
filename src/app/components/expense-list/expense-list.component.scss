@@ -1,0 +1,88 @@
+.expense-list-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    height: 65px;
+    width: 100%;
+    max-width: 360px;
+    background-color: var(--secondary);
+    box-shadow: rgb(210 210 210 / 15%) 0px 1px 100px 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    animation: fadeIn 0.5s ease-in-out;
+
+    & span {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-color {
+      height: 70%;
+      width: 10px;
+      background-color: #bbb;
+      border-radius: 16px;
+      display: inline-block;
+    }
+
+    .icon {
+      font-size: 40px;
+      color: white;
+    }
+
+    .duo-column {
+      display: flex;
+      flex-direction: column;
+
+      &.end {
+        align-items: flex-end;
+        margin-right: 10px;
+      }
+
+      .category {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        i {
+          font-size: 20px;
+          //color: #004d00;
+        }
+      }
+
+      .category, .amount {
+        color: var(--seventh);
+        font-size: 17px;
+      }
+
+      .subcategory {
+        color: var(--fourth);
+        font-size: 12px;
+      }
+
+      .date {
+        color: var(--tertiary);
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

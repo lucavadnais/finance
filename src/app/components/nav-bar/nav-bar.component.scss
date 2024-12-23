@@ -1,0 +1,81 @@
+.nav-bar-container {
+  margin: auto;
+  max-width: 380px;
+  padding: 0 10px;
+
+  .nav-bar {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--sixth);
+    color: white;
+    box-shadow: rgb(210 210 210 / 15%) 0px 1px 100px 0px;
+    border-radius: 25px;
+
+    i {
+      font-size: 30px;
+      color: var(--fourth);
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: white;
+      }
+
+      &.selected {
+        color: var(--primary);
+      }
+    }
+  }
+
+  .add-button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 40px;
+
+    .plus-icon {
+      background: var(--shade);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 50px;
+    }
+  }
+}
+
+.custom-select-box {
+  appearance: none; /* Remove default dropdown arrow */
+  -webkit-appearance: none; /* For Safari and Chrome (iOS and Android) */
+  -moz-appearance: none; /* For Firefox */
+  text-align: center;
+  background-color: var(--primary);
+  border: none !important;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--sixth);
+  font-family: Poppins , sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+
+  option {
+    font-size: 16px;
+  }
+}
+
+.custom-select-wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}

@@ -1,3 +1,32 @@
-<div>
-  <app-button (click)="logout()" [text]="'Log Out'" [type]="'primary'"></app-button>
+<div class="container">
+  <div class="loading" *ngIf="loading">
+    <p-progressSpinner
+      class="spinner"
+      strokeWidth="8"
+      animationDuration="1.5s" />
+  </div>
+  <span class="test">
+    <div class="text-section">Argent total</div>
+    <div class="text-title">{{totalAmount}}$</div>
+    <div id="card-container" class="card-stack">
+      <app-card *ngFor="let account of accounts; let i = index" id="{{i}}" (click)="selectCard(account, i)" class="card" [ngStyle]="{'top.px': i * offset, '--slide-down-target': slideDownTarget + 'px'}" [cardColor]="account.color" [cardType]="account.type" [cardNumber]="account.lastDigits" [cardHolderName]="account.name" [cardProvider]="account.provider"></app-card>
+      <div id="{{accounts.length}}" (click)="createNewCard()" class="card add add-card" [ngStyle]="{'top.px': accounts.length * 75, '--slide-down-target': slideDownTarget + 'px'}">
+        <div class="new-card-text">
+          Ajouter une nouvelle carte <i class="fa-solid fa-circle-plus"></i>
+        </div>
+      </div>
+      <app-card *ngIf="!accounts.length" (click)="createNewCard()" class="card" [ngStyle]="{'top.px': offset, '--slide-down-target': slideDownTarget + 'px'}" [newCard]="newAccountCard.newCard" [cardColor]="newAccountCard.color" [cardType]="newAccountCard.type" [cardNumber]="newAccountCard.lastDigits" [cardHolderName]="newAccountCard.name" [cardProvider]="newAccountCard.provider"></app-card>
+    </div>
+  </span>
+
+<!--  <div>Actions</div>-->
+  <app-expense-list class="expense-list" *ngIf="accounts.length" [expenses]="filteredExpenses"></app-expense-list>
+  <div *ngIf="!filteredExpenses.length">Aucune transaction</div>
+  <app-bottom-sheet *ngIf="isBottomSheetOpen" [title]="'Nouvelle carte'" [id]="'new-card'" (isOpen)="createNewCard()">
+    <div content>
+      <app-new-account></app-new-account>
+    </div>
+  </app-bottom-sheet>
 </div>
+
+

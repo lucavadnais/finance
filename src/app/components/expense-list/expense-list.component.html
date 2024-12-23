@@ -1,0 +1,17 @@
+<div class="expense-list-container">
+  <div *ngFor="let expense of filteredExpenses" class="item">
+    <span>
+      <div class="card-color" [style.background]="expense.account?.color"></div>
+<!--      <div class="icon"><i class="fa-solid fa-receipt"></i></div>-->
+      <div class="duo-column">
+        <div class="category">{{expense.category?.name}}</div>
+<!--        <i class="fa-solid fa-caret-up"></i>-->
+        <div class="subcategory">{{expense.category?.parent?.name}}</div>
+      </div>
+    </span>
+    <div class="duo-column end">
+      <div class="amount">{{expense.amount}}$</div>
+      <div class="date">{{expense.date}}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div>
+  <app-card class="card" [cardColor]="newAccountCard.color" [cardType]="newAccountCard.type" [cardNumber]="newAccountCard.lastDigits" [cardHolderName]="newAccountCard.name" [cardProvider]="newAccountCard.provider"></app-card>
+  <div class="box new-account-form">
+    <div class="color-picker-container">
+      <div>Définissez une couleur primaire ainsi qu'une couleur secondaire à votre carte.</div>
+      <div (click)="triggerPrimaryColorPicker()" [ngStyle]="{'background': primaryColor}" class="color-picker">
+        <i class="color-icon fa-solid fa-eye-dropper"></i>
+      </div>
+      <div (click)="triggerSecondaryColorPicker()" [ngStyle]="{'background': secondaryColor}" class="color-picker">
+        <i class="color-icon fa-solid fa-eye-dropper"></i>
+      </div>
+      <input type="color" #colorPickerPrimary [value]="primaryColor" (input)="onColorChange($event, 'primary')" />
+      <input type="color" #colorPickerSecondary [value]="secondaryColor" (input)="onColorChange($event, 'secondary')" />
+    </div>
+    <div class="form">
+      <div class="duo">
+        <span>
+          <label>Type</label>
+          <input pInputText [(ngModel)]="newAccountCard.type" />
+        </span>
+
+        <span>
+          <label>Provider</label>
+          <input pInputText [(ngModel)]="newAccountCard.provider" />
+        </span>
+      </div>
+      <span>
+        <label>Nom du titulaire</label>
+        <input pInputText [(ngModel)]="newAccountCard.name" />
+      </span>
+      <span>
+        <label>Montant initial sur le compte</label>
+        <p-inputNumber
+          [(ngModel)]="initialAmount"
+          suffix=" $" />
+      </span>
+      <span>
+        <label>4 derniers chiffres</label>
+        <p-inputNumber [(ngModel)]="newAccountCard.lastDigits"/>
+      </span>
+    </div>
+    <app-button (click)="addNewAccount()" type="primary" text="Ajouter"></app-button>
+  </div>
+</div>
+

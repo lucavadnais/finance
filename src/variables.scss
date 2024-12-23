@@ -1,6 +1,9 @@
 :root {
 
-  font-family: Poppins , sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  overflow: auto;
 
   .light-theme {
     --primary: #FAFAFA;
@@ -10,6 +13,9 @@
     --fifth: #15064C;
     --sixth: #010317;
     --seventh: #000000;
+    --shade: linear-gradient(#D9D9D9, #D9D9D9, #B0B0B0);
+    background-color: var(--primary);
+    height: 100%;
   }
 
   .dark-theme {
@@ -20,6 +26,9 @@
     --fifth: #EEEEEE;
     --sixth: #EEEEEE;
     --seventh: #FFFFFF;
+    --shade: linear-gradient(#686A84, #686A84, #1B1D33);
+    background-color: var(--primary);
+    height: 100%;
   }
 
   --neutral: #636363;

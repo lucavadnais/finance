@@ -1,0 +1,16 @@
+<i *ngIf="subCategories.length" (click)="backToCategories()" class="back-button fa-solid fa-angle-left"></i>
+<div class="test">
+  <div id="categories-container" class="categories-container">
+    <div (click)="selectCategory(category)" [class]="category._id === selectedCategory?._id ? 'category selected' : 'category'" *ngFor="let category of filteredCategories">
+      <i [class]="category.icon"></i>
+      <div>{{category.name}}</div>
+    </div>
+  </div>
+  <div id="sub-categories-container" class="sub-categories-container">
+    <div (click)="selectCategory(subCategory)" [class]="subCategory._id === selectedCategory?._id ? 'category selected' : 'category'" *ngFor="let subCategory of subCategories">
+      <i [class]="subCategory.icon"></i>
+      <div>{{subCategory.name}}</div>
+    </div>
+  </div>
+</div>
+
